@@ -2,7 +2,6 @@
   <div>
     <v-bottom-navigation
       class="menu-superior-container"
-      v-model="value"
       color="accent"
     >
       <v-btn
@@ -101,6 +100,11 @@ export default {
           title: "Configuración",
           icon: "mdi-cog-outline",
           to: "/configuracion",
+        },
+        {
+          title: "Calculadora",
+          icon: "mdi-calculator",
+          to: "/calculadora",
         },
       ],
       mini: false,

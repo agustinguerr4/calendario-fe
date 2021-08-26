@@ -5,6 +5,7 @@ import Calendario from '../components/Calendario/Index.vue'
 import Ambientes from '../components/Ambientes/ListaAmbientes.vue'
 import Plantas from '../components/Plantas/ListaPlantas.vue'
 import Configuracion from '../components/Configuracion/Configuracion.vue'
+import Calculadora from '../components/Calculadora/Calculadora.vue'
 
 
 Vue.use(VueRouter)
@@ -34,6 +35,11 @@ const routes = [
     path: '/configuracion',
     name: 'Configuracion',
     component: Configuracion
+  },
+  {
+    path: '/calculadora',
+    name: 'Calculadora',
+    component: Calculadora
   }
 
 ]
