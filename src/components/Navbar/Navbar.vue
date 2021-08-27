@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-bottom-navigation
+    v-if="$screen.width < 768"
       class="menu-superior-container"
       color="accent"
     >
@@ -32,7 +33,7 @@
     <v-card class="navbar-container">
       <v-navigation-drawer
         v-model="drawer"
-        temporary
+        :permanent="$screen.width > 768"
         fixed
         :mini-variant.sync="mini"
       >
@@ -73,6 +74,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -107,9 +109,9 @@ export default {
           to: "/calculadora",
         },
       ],
-      mini: false,
+      mini: true
     };
-  },
+  }
 };
 </script>
 
@@ -120,6 +122,8 @@ export default {
 
 .menu-superior-container {
   display: flex;
+  width: 100vw;
+  background-color: #4CAF50 !important;
   align-items: center;
 }
 .menu-superior-btn {
