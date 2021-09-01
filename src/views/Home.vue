@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ Users }}
     <div v-for="(ambiente, index) in Ambientes" :key="index">
       <h3>Ambiente</h3>
       <h4>Nombre:</h4>
@@ -50,6 +51,20 @@ import gql from "graphql-tag";
 export default {
   name: "Home",
   apollo: {
+    Users: gql`
+      {
+        Users {
+          _id
+          username
+          age
+          email
+          password
+          token
+          
+          createdAt
+        }
+      }
+    `,
     Ambientes: gql`
       {
         Ambientes {
@@ -73,3 +88,14 @@ export default {
   },
 };
 </script>
+
+<style>
+.v-main__wrap {
+  padding: 1rem;
+}
+@media screen and (min-width: 769px) {
+  .v-main__wrap {
+    margin-left: 4rem;
+  }
+}
+</style>

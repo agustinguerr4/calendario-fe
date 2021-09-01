@@ -10,7 +10,7 @@
             <v-app-bar-nav-icon color="white"></v-app-bar-nav-icon>
 
             <v-toolbar-title class="text-h6 white--text pl-0">
-              Messages
+              {{nombre}}
             </v-toolbar-title>
 
             <v-spacer></v-spacer>
@@ -27,12 +27,12 @@
                 src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
               />
             </v-avatar>
-            <p class="ml-3">John Doe</p>
+            <p class="ml-3">User NAme</p>
           </v-card-title>
         </v-img>
 
         <v-card-text>
-          <div class="font-weight-bold ml-8 mb-2">Today</div>
+          <div class="font-weight-bold ml-8 mb-2">Lo último</div>
 
           <v-timeline align-top dense>
             <v-timeline-item
@@ -56,24 +56,25 @@
 </template>
 <script>
 export default {
+  props:['nombre','tipo','tiempo'],
   data: () => ({
     messages: [
       {
-        from: "You",
-        message: `Sure, I'll see you later.`,
-        time: "10:42am",
+        from: "Riego",
+        message: `750cm3 por maceta.`,
+        time: "08 Ago - 10:42am",
         color: "deep-purple lighten-1",
       },
       {
-        from: "John Doe",
-        message: "Yeah, sure. Does 1:00pm work?",
-        time: "10:37am",
+        from: "Poda",
+        message: "Mitad pical, mitad SOG",
+        time: "10 Ago - 10:37am",
         color: "green",
       },
       {
-        from: "You",
-        message: "Did you still want to grab lunch today?",
-        time: "9:47am",
+        from: "Desinfección",
+        message: "Todo listo pa!",
+        time: "21 Ago 9:47am",
         color: "deep-purple lighten-1",
       },
     ],

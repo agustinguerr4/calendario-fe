@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-bottom-navigation
-    v-if="$screen.width < 768"
+      v-if="$screen.width < 768"
       class="menu-superior-container"
       color="accent"
     >
@@ -68,13 +68,14 @@
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
-      <v-main> <router-view /></v-main>
+      <v-main>
+        <router-view />
+      </v-main>
     </v-card>
   </div>
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -109,9 +110,9 @@ export default {
           to: "/calculadora",
         },
       ],
-      mini: true
+      mini: true,
     };
-  }
+  },
 };
 </script>
 
@@ -123,7 +124,7 @@ export default {
 .menu-superior-container {
   display: flex;
   width: 100vw;
-  background-color: #4CAF50 !important;
+  background-color: #4caf50 !important;
   align-items: center;
 }
 .menu-superior-btn {
