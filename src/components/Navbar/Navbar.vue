@@ -1,134 +1,107 @@
 <template>
   <div>
-    <v-bottom-navigation
-      v-if="$screen.width < 768"
-      class="menu-superior-container"
-      color="accent"
-    >
-      <v-btn
-        v-for="(item, index) in items"
-        :key="index"
-        :value="item.title"
-        :to="item.to"
-        class="menu-superior-btn"
-        color="primary"
-      >
-        <span>
-          {{ item.title }}
-        </span>
-        <v-icon>
-          {{ item.icon }}
-        </v-icon>
+    <v-app-bar color="primary accent-4" dark>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title>Calendario 4:20</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <router-link to="/about">
+        <v-btn color="secondary" class="mr-2">
+          <v-icon>mdi-chat-question</v-icon>
+        </v-btn>
+      </router-link>
+
+      <v-btn color="accent" @click="logOut()">
+        <v-icon>mdi-logout</v-icon>
       </v-btn>
-      <v-btn
-        @click.stop="drawer = !drawer"
-        color="primary"
-        class="menu-superior-btn"
-      >
-        <span>Más</span>
-        <v-icon>{{ "mdi-menu" }}</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
+    </v-app-bar>
 
-    <v-card class="navbar-container">
-      <v-navigation-drawer
-        v-model="drawer"
-        :permanent="$screen.width > 768"
-        fixed
-        :mini-variant.sync="mini"
-      >
-        <v-list-item class="px-2">
-          <v-list-item-avatar>
-            <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
-          </v-list-item-avatar>
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-list dense>
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <router-link to="/">
+            <v-list-item>
+              <v-icon>mdi-view-dashboard</v-icon>
+              <v-list-item-title class="ml-2">Inicio</v-list-item-title>
+            </v-list-item>
+          </router-link>
 
-          <v-list-item-title>Agustin G.</v-list-item-title>
+          <router-link to="/ambientes">
+            <v-list-item>
+              <v-icon>mdi-home-assistant</v-icon>
+              <v-list-item-title class="ml-2">Ambientes</v-list-item-title>
+            </v-list-item>
+          </router-link>
 
-          <v-btn icon @click.stop="mini = !mini">
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
-        </v-list-item>
+          <router-link to="/plantas">
+            <v-list-item>
+              <v-icon>mdi-tree</v-icon>
+              <v-list-item-title class="ml-2">Plantas</v-list-item-title>
+            </v-list-item>
+          </router-link>
 
-        <v-divider></v-divider>
+          <router-link to="/calendario">
+            <v-list-item>
+              <v-icon>mdi-calendar</v-icon>
+              <v-list-item-title class="ml-2">Calendario</v-list-item-title>
+            </v-list-item>
+          </router-link>
 
-        <v-list dense>
-          <v-list-item
-            v-for="item in itemsLarge"
-            :key="item.title"
-            link
-            :to="item.to"
-          >
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
+          <router-link to="/calculadora">
+            <v-list-item>
+              <v-icon>mdi-calculator</v-icon>
+              <v-list-item-title class="ml-2">Calculadora</v-list-item-title>
+            </v-list-item>
+          </router-link>
 
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-navigation-drawer>
-      <v-main>
-        <router-view />
-      </v-main>
-    </v-card>
+          <router-link to="/reprocann">
+            <v-list-item>
+              <v-icon>mdi-check-decagram</v-icon>
+              <v-list-item-title class="ml-2">Reprocann</v-list-item-title>
+            </v-list-item>
+          </router-link>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import router from '../../router'
 export default {
-  data() {
-    return {
-      drawer: false,
-      items: [
-        { title: "Inicio", icon: "mdi-apps", to: "/" },
-        { title: "Ambientes", icon: "mdi-home-heart", to: "/ambientes" },
-        { title: "Plantas", icon: "mdi-tree-outline", to: "/plantas" },
-        {
-          title: "Calendario",
-          icon: "mdi-calendar-outline",
-          to: "/calendario",
-        },
-      ],
-      itemsLarge: [
-        { title: "Inicio", icon: "mdi-apps", to: "/" },
-        { title: "Ambientes", icon: "mdi-home-heart", to: "/ambientes" },
-        { title: "Plantas", icon: "mdi-tree-outline", to: "/plantas" },
-        {
-          title: "Calendario",
-          icon: "mdi-calendar-outline",
-          to: "/calendario",
-        },
-        {
-          title: "Configuración",
-          icon: "mdi-cog-outline",
-          to: "/configuracion",
-        },
-        {
-          title: "Calculadora",
-          icon: "mdi-calculator",
-          to: "/calculadora",
-        },
-      ],
-      mini: true,
-    };
+  data: () => ({
+    drawer: false,
+    group: null,
+  }),
+
+  methods: {
+    logOut:  function() {
+      // Vaciar LS
+       localStorage.removeItem("apollo-token");
+       localStorage.removeItem("authStatus");
+
+      // Vaciar Store
+       this.salir();
+
+      // Redirect al login
+       router.push("/login");
+    },
+
+    ...mapActions({
+      salir: 'Auth/cerrarSesion'
+    }),
+  },
+
+  watch: {
+    group() {
+      this.drawer = false;
+    },
   },
 };
 </script>
-
-<style scoped>
-.navbar-container {
-  min-height: 100vh;
-}
-
-.menu-superior-container {
-  display: flex;
-  width: 100vw;
-  background-color: #4caf50 !important;
-  align-items: center;
-}
-.menu-superior-btn {
-  background-color: transparent;
-  padding: 2rem !important;
-}
-</style>

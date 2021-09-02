@@ -1,27 +1,28 @@
 <template>
   <v-app>
-    <div v-if="isLogged">
-      <Navbar />
-    </div>
-    <div v-else>
-      <login/>
-    </div>
+    <router-view />
   </v-app>
 </template>
 
 <script>
-import Login from "./components/Login/Login.vue";
-import Navbar from "./components/Navbar/Navbar.vue";
+import { mapGetters } from 'vuex'
 export default {
   name: "App",
   components: {
-    Navbar,
-    Login,
   },
   data() {
-    return {
-      isLogged: false
-    };
+    return {};
   },
+  computed: {
+    ...mapGetters({
+      isAuth: 'Auth/isAuth'
+    })
+  }
 };
 </script>
+
+<style>
+a {
+  text-decoration: none;
+}
+</style>

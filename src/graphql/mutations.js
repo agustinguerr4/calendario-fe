@@ -15,6 +15,9 @@ mutation createUser(
     confirmPassword: $confirmPassword
   }){
     token
+    username
+    email
+    _id
   }
 }
 `
@@ -24,7 +27,7 @@ mutation loginUser(
     $username: String!
     $password: String!
 ){
-  createUser(input:{
+  loginUser(input:{
     username: $username
     password: $password
   }){

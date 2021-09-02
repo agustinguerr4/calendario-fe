@@ -13,10 +13,12 @@ const AUTH_TOKEN = 'apollo-token'
 const httpEndpoint = process.env.VUE_APP_GRAPHQL_HTTP || 'http://localhost:3000/graphql'
 
 const authLink = setContext(async (_, { headers }) => {
-  const token = localStorage.getItem('apollo-token')
+  const token = await localStorage.getItem('apollo-token')
   return {
-    ...headers,
-    Authorization: token || ''
+      headers: {
+        ...headers,
+        authorization: token || ''
+      }
   }
 })
 
