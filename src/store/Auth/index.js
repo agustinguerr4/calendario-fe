@@ -61,7 +61,10 @@ const actions = {
 
     async cerrarSesion({commit}){
         commit('CERRAR_SESION')
-    } 
+    } ,
+     fetchAccessToken({ commit }) {
+        commit('SET_TOKEN', localStorage.getItem('apollo-token'));
+      },
 }
 const mutations = {
     LOGIN_USER(state, payload) {
