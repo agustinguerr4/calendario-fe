@@ -14,13 +14,11 @@ const getters = {
     authStatus: state => state.authStatus
 }
 const actions = {
-    //eslint-disable-next-line
     async createUser({ commit }, userData) {
         let { data: { createUser } } = await apolloClient.mutate({
             mutation: CREATE_USER,
             variables: userData
         })
-
         const user = {
             username: createUser.username,
             email: createUser.email,
@@ -28,14 +26,10 @@ const actions = {
         }
 
         const token = createUser.token
-        commit('LOGIN_USER', user)
-        commit('SET_TOKEN', token)
-        // Set token in ls
+        commit('loginUser', user)
+        commit('setToken', token)
         localStorage.setItem('apollo-token', token)
-
-        //redirect to /
         router.push('/inicio')
-
     },
 
     async loginUser({commit}, userData){
@@ -44,15 +38,17 @@ const actions = {
             variables: userData
         })
 
+
         const user = {
             username: loginUser.username,
             email: loginUser.email,
             id: loginUser._id
         }
+        console.log(loginUser)
 
         const token = loginUser.token
-        commit('LOGIN_USER', user)
-        commit('SET_TOKEN', token)
+        commit('loginUser', user)
+        commit('setToken', token)
         // Set token in ls
         localStorage.setItem('apollo-token', token)
         //redirect to /
@@ -60,23 +56,23 @@ const actions = {
     },
 
     async cerrarSesion({commit}){
-        commit('CERRAR_SESION')
+        commit('cerrarSesion')
     } ,
      fetchAccessToken({ commit }) {
-        commit('SET_TOKEN', localStorage.getItem('apollo-token'));
+        commit('setToken', localStorage.getItem('apollo-token'));
       },
 }
 const mutations = {
-    LOGIN_USER(state, payload) {
+    loginUser(state, payload) {
         state.user = payload
         state.authStatus = true
         localStorage.setItem('authStatus', state.authStatus)
     },
-    SET_TOKEN(state, payload) {
+    setToken(state, payload) {
         state.token = payload
     },
 
-    CERRAR_SESION(state){
+    cerrarSesion(state){
         state.authStatus = false
         state.token = null;
         state.user = {}

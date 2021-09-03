@@ -33,6 +33,8 @@ mutation loginUser(
   }){
     token
     _id  
+    username
+    email
   }
 }
 `

@@ -1,83 +1,188 @@
 <template>
-  <v-container>
-    <v-row justify="space-around">
-      <v-card width="400">
-        <v-img
-          height="200px"
-          src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
-        >
-          <v-app-bar flat color="rgba(0, 0, 0, 0)">
-            <v-app-bar-nav-icon color="white"></v-app-bar-nav-icon>
+  <v-row dense>
+    <v-col cols="12">
+      <v-card color="#8D517B" dark class="card-ambiente">
+        <v-img class="imagen-encabezado" src="../../assets/out.jpeg" height="200px"></v-img>
 
-            <v-toolbar-title class="text-h6 white--text pl-0">
-              {{nombre}}
-            </v-toolbar-title>
-
-            <v-spacer></v-spacer>
-
-            <v-btn color="white" icon>
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
-          </v-app-bar>
-
-          <v-card-title class="white--text mt-8">
-            <v-avatar size="56">
-              <img
-                alt="user"
-                src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
-              />
-            </v-avatar>
-            <p class="ml-3">User NAme</p>
-          </v-card-title>
-        </v-img>
-
-        <v-card-text>
-          <div class="font-weight-bold ml-8 mb-2">Lo último</div>
-
-          <v-timeline align-top dense>
-            <v-timeline-item
-              v-for="message in messages"
-              :key="message.time"
-              :color="message.color"
+        <v-card-title class="text-h5"> Nombre del ambiente </v-card-title>
+        <v-dialog v-model="dialog" persistent max-width="600px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-bind="attrs"
+              v-on="on"
+              class="boton-editar"
+              color="secondary"
+              elevation="2"
+              fab
               small
+              ><v-icon>mdi-book-edit</v-icon></v-btn
             >
-              <div>
-                <div class="font-weight-normal">
-                  <strong>{{ message.from }}</strong> @{{ message.time }}
-                </div>
-                <div>{{ message.message }}</div>
-              </div>
-            </v-timeline-item>
-          </v-timeline>
-        </v-card-text>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="text-h5">Editar ambiente</span>
+              <v-btn
+                @click="dialog = false"
+                fab
+                color="accent"
+                small
+                class="boton-cerrar-modal"
+                ><v-icon>mdi-close</v-icon></v-btn
+              >
+            </v-card-title>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="12" md="8">
+                    <v-text-field label="Nombre" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      label="Legal middle name"
+                      hint="example of helper text only on focus"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field label="Email*" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      label="Password*"
+                      type="password"
+                      required
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-select
+                      :items="['0-17', '18-29', '30-54', '54+']"
+                      label="Age*"
+                      required
+                    ></v-select>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-autocomplete
+                      :items="[
+                        'Skiing',
+                        'Ice hockey',
+                        'Soccer',
+                        'Basketball',
+                        'Hockey',
+                        'Reading',
+                        'Writing',
+                        'Coding',
+                        'Basejump',
+                      ]"
+                      label="Interests"
+                      multiple
+                    ></v-autocomplete>
+                  </v-col>
+                </v-row>
+              </v-container>
+              <small>*indicates required field</small>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="dialog = false">
+                Close
+              </v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false">
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+        <v-btn class="boton-eliminar" color="danger" elevation="2" fab small
+          ><v-icon>mdi-delete</v-icon></v-btn
+        >
+
+        <v-card-subtitle>Tipo - Watts - Dimensiones</v-card-subtitle>
+
+        <v-card-actions>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon v-bind="attrs" v-on="on">mdi-thermometer</v-icon>
+            </template>
+            <span>Temperatura: 21º C</span>
+          </v-tooltip>
+          21º C
+
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon v-bind="attrs" v-on="on" class="ml-4 mr-1"
+                >mdi-water</v-icon
+              >
+              78%
+            </template>
+            <span>Humedad: 78 %</span>
+          </v-tooltip>
+          78%
+
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon v-bind="attrs" v-on="on" class="ml-4 mr-1"
+                >mdi-tree</v-icon
+              >
+            </template>
+            <span>Plantas: 8</span>
+          </v-tooltip>
+          8
+
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon v-bind="attrs" v-on="on" class="ml-4 mr-1"
+                >mdi-clock</v-icon
+              >
+            </template>
+            <span>Encendido 8:00hs - Apagado 20:00hs</span>
+          </v-tooltip>
+          8:00hs - 20:00hs
+        </v-card-actions>
+
+        <v-btn color="primary" large class="boton-ver"
+          ><v-icon>VER AMBIENTE</v-icon></v-btn
+        >
       </v-card>
-    </v-row>
-  </v-container>
+    </v-col>
+  </v-row>
 </template>
 <script>
 export default {
-  props:['nombre','tipo','tiempo'],
+  props: [],
   data: () => ({
-    messages: [
-      {
-        from: "Riego",
-        message: `750cm3 por maceta.`,
-        time: "08 Ago - 10:42am",
-        color: "deep-purple lighten-1",
-      },
-      {
-        from: "Poda",
-        message: "Mitad pical, mitad SOG",
-        time: "10 Ago - 10:37am",
-        color: "green",
-      },
-      {
-        from: "Desinfección",
-        message: "Todo listo pa!",
-        time: "21 Ago 9:47am",
-        color: "deep-purple lighten-1",
-      },
-    ],
+    dialog: false,
   }),
 };
 </script>
+
+<style scoped>
+.card-ambiente {
+  position: relative;
+}
+
+.boton-editar {
+  position: absolute;
+  top: 1rem;
+  right: 4rem;
+}
+
+.boton-eliminar {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.boton-cerrar-modal {
+  position: absolute;
+  right: 2rem;
+}
+
+.boton-ver {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.imagen-encabezado{
+  object-fit: cover;
+}
+</style>
